@@ -13,7 +13,7 @@ Http_code_to_url(){
 echo && read -e -p "请输入过滤的状态码：" code
 echo $code"状态码url分布"
 echo "url出现次数 url"
-zcat $url|awk '{if($8=='$code') {print $4}}'|sort|uniq -c|sort -r
+zcat $url|awk '{if($8=='$code') {print $4}}'|sort|uniq -c|sort -nrk 1 -t' '
 }
 
 CDN_QPS_and_hit(){
@@ -29,18 +29,18 @@ Http_code_to_url_noparameter(){
 echo && read -e -p "请输入过滤的状态码：" code
 echo $code"状态码url分布（去参）"
 echo "url出现次数 url"
-zcat $url|awk '{if( $8 == '$code' ) {print $4}}'|awk -F'?' '{print $1}'|sort|uniq -c|sort -r
+zcat $url|awk '{if( $8 == '$code' ) {print $4}}'|awk -F'?' '{print $1}'|sort|uniq -c|sort -nrk 1 -t' '
 }
 
 Http_code_to_Referer(){
 echo && read -e -p "请输入过滤的状态码：" code
 echo "  出现次数 referer"
-zcat $url|awk '{if( $8 == '$code' ) {print $9}}'|sort|uniq -c|sort -r
+zcat $url|awk '{if( $8 == '$code' ) {print $9}}'|sort|uniq -c|sort -nrk 1 -t' '
 }
 
 Http_code_to_IP(){
 echo && read -e -p "请输入过滤的状态码：" code
-zcat $url|awk '{if($8=='$code') {print $2}}'|sort|uniq -c|sort -r
+zcat $url|awk '{if($8=='$code') {print $2}}'|sort|uniq -c|sort -nrk 1 -t' '
 }
 
 echo -e "  CDN日志分析脚本 ${Red_font_prefix}[${sh_ver}]${Font_color_suffix}
