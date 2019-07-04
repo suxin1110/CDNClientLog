@@ -51,17 +51,6 @@ echo -e "  CDN日志分析脚本 ${Red_font_prefix}[${sh_ver}]${Font_color_suffi
   ${Green_font_prefix}4.${Font_color_suffix} 统计特定状态码对应访问URL（去除参数）
   ${Green_font_prefix}5.${Font_color_suffix} 统计特定状态码对应Referer
   ${Green_font_prefix}6.${Font_color_suffix} 统计特定状态码对应客户端IP
-  ${Green_font_prefix}7.${Font_color_suffix} 设置 用户配置
-  ${Green_font_prefix}8.${Font_color_suffix} 手动 修改配置
-  ${Green_font_prefix}9.${Font_color_suffix} 切换 端口模式
-————————————
- ${Green_font_prefix}10.${Font_color_suffix} 启动 ShadowsocksR
- ${Green_font_prefix}11.${Font_color_suffix} 停止 ShadowsocksR
- ${Green_font_prefix}12.${Font_color_suffix} 重启 ShadowsocksR
- ${Green_font_prefix}13.${Font_color_suffix} 查看 ShadowsocksR 日志
-————————————
- ${Green_font_prefix}14.${Font_color_suffix} 其他功能
- ${Green_font_prefix}15.${Font_color_suffix} 升级脚本
  "
 echo && read -e -p "请输入数字 [1-15]：" num
 case "$num" in
@@ -82,33 +71,6 @@ case "$num" in
         ;;
         6)
         Http_code_to_IP
-        ;;
-        7)
-        Modify_Config
-        ;;
-        8)
-        Manually_Modify_Config
-        ;;
-        9)
-        Port_mode_switching
-        ;;
-        10)
-        Start_SSR
-        ;;
-        11)
-        Stop_SSR
-        ;;
-        12)
-        Restart_SSR
-        ;;
-        13)
-        View_Log
-        ;;
-        14)
-        Other_functions
-        ;;
-        15)
-        Update_Shell
         ;;
         *)
         echo -e "${Error} 请输入正确的数字 [1-15]"
