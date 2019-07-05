@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
+# Created by Johnnyxsu from TencentCloud
 url=$1
 
 Http_code(){
@@ -40,7 +41,43 @@ zcat $url|awk '{if( $8 == '$code' ) {print $9}}'|sort|uniq -c|sort -nrk 1 -t' '
 
 Http_code_to_IP(){
 echo && read -e -p "请输入过滤的状态码：" code
-zcat $url|awk '{if($8=='$code') {print $2}}'|sort|uniq -c|sort -nrk 1 -t' '
+echo && read -e -p "输入需要打印的行（如果为空则全部打印）：" line
+if [ ! $line ] 
+then
+	zcat $url|awk '{if($8=='$code') {print $2}}'|sort|uniq -c|sort -nrk 1 -t' '
+else
+	zcat $url|awk '{if($8=='$code') {print $2}}'|sort|uniq -c|sort -nrk 1 -t' '|head -n $line
+fi
+}
+
+Http_code_to_log(){
+echo && read -e -p "请输入过滤的状态码：" code
+echo && read -e -p "输入需要打印的行（如果为空则全部打印）：" line
+if [ ! $line ]
+then
+	zcat $url|awk '{if($8=='$code') {print $0}}'
+else
+	zcat $url|awk '{if($8=='$code') {print $0}}'|head -n $line
+fi
+}
+
+IP_to_log(){
+echo && read -e -p "请输入需要过滤的IP：" IP
+echo && read -e -p "请输入需要过滤的状态码（空则不对状态码过滤）：" code
+echo && read -e -p "请输入需要过滤的url关键字（空则不对url过滤）：" ur
+if [[ ! $code && ! $ur ]]
+then
+	zcat $url|grep $IP
+elif [ ! $ur ]
+then
+	zcat $url|grep $IP|awk '{if( $8 == '$code' ) {print $0}}'
+elif [ ! $code ]
+then
+	zcat $url|grep $IP|grep $ur
+else
+	zcat $url|grep $IP|awk '{if( $8 == '$code' ) {print $0}}'|grep $ur
+fi
+
 }
 
 echo -e "  CDN日志分析脚本 ${Red_font_prefix}[${sh_ver}]${Font_color_suffix}
@@ -51,6 +88,8 @@ echo -e "  CDN日志分析脚本 ${Red_font_prefix}[${sh_ver}]${Font_color_suffi
   ${Green_font_prefix}4.${Font_color_suffix} 统计特定状态码对应访问URL（去除参数）
   ${Green_font_prefix}5.${Font_color_suffix} 统计特定状态码对应Referer
   ${Green_font_prefix}6.${Font_color_suffix} 统计特定状态码对应客户端IP
+  ${Green_font_prefix}7.${Font_color_suffix} 统计特定状态码对应的前N行日志
+  ${Green_font_prefix}8.${Font_color_suffix} 统计特定客户端IP访问日志
  "
 echo && read -e -p "请输入数字 [1-15]：" num
 case "$num" in
@@ -71,6 +110,33 @@ case "$num" in
         ;;
         6)
         Http_code_to_IP
+        ;;
+        7)
+        Http_code_to_log
+        ;;
+        8)
+        IP_to_log
+        ;;
+        9)
+        Port_mode_switching
+        ;;
+        10)
+        Start_SSR
+        ;;
+        11)
+        Stop_SSR
+        ;;
+        12)
+        Restart_SSR
+        ;;
+        13)
+        View_Log
+        ;;
+        14)
+        Other_functions
+        ;;
+        15)
+        Update_Shell
         ;;
         *)
         echo -e "${Error} 请输入正确的数字 [1-15]"
