@@ -117,27 +117,6 @@ case "$num" in
         8)
         IP_to_log
         ;;
-        9)
-        Port_mode_switching
-        ;;
-        10)
-        Start_SSR
-        ;;
-        11)
-        Stop_SSR
-        ;;
-        12)
-        Restart_SSR
-        ;;
-        13)
-        View_Log
-        ;;
-        14)
-        Other_functions
-        ;;
-        15)
-        Update_Shell
-        ;;
         *)
         echo -e "${Error} 请输入正确的数字 [1-15]"
         ;;
